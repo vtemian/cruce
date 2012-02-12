@@ -1,0 +1,25 @@
+.carte{
+	background-color: #ff450c;
+	width: 50px;
+	height: 50px;
+	float: left;
+	margin-left: 5px;
+}
+#carti{
+	display: none;
+}
+#carti.visible{
+	display: block;
+}
+#licitatii{
+	display: none;
+}
+#licitatii.visible{
+	display: block;
+}
+#tromfii{
+	display: none;
+}
+#tromfii.visible{
+	display: block;
+}
