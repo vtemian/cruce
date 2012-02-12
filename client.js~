@@ -10,6 +10,7 @@ $(document).ready(function(){
 	var deck;
 	var turaCarti = false;
 	var nrTure = 0;
+	var cerere;
 	
 	$("#submit").click(function(){
 		username = $('#user').val();
@@ -65,10 +66,12 @@ $(document).ready(function(){
 		});
 		socket.on('tromfAles', function(data){
 			tromf = data.tromf;
-		})
+		});
 		socket.on('cerere', function(data){
-			console.log(data);
-		})
+			cerere = data.cerere;
+			$('#cerere').html(cerere.cardValue + cerere.cardColor);
+			turaCarti = true;
+		});
 	});
 	
 	$('.cate').live('click', function(){
@@ -82,13 +85,35 @@ $(document).ready(function(){
 	
 	
 	$('.carte').live('click', function(){
+	
 		if(turaCarti){
-			socket.emit('oferta', {'battleID': battleID, 'user':username, 'cardValue':$(this).data('cardValue'), 'cardColor':$(this).data(cardColor)});
+			if(cerere){
+				if(checCerere($(this))){
+					cerere = false;
+					socket.emit('oferta', {'battleID': battleID, 'user':username, 'cardValue':$(this).data('cardValue'), 'cardColor':$(this).data('cardColor')});
+				}else{
+					alert('Nu poti sa dai cartea asta!');
+				}
+			}
+			else{
+				socket.emit('oferta', {'battleID': battleID, 'user':username, 'cardValue':$(this).data('cardValue'), 'cardColor':$(this).data('cardColor')});	
+				
+				var index = $('.carte').index($(this));
+				deck.splice(index, 1);
+				
+				
+			}
 			turaCarti = false;
+			
 		}
 	});
 	
 	
-	
+	function checkCerere(card){
+		var cardValue = card.data('cardValue');
+		var cardColor = card.data('cardColor');
+		
+		return false;
+	}	
 	
 })

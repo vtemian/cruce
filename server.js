@@ -91,16 +91,19 @@ io.sockets.on('connection', function (socket) {
     		check_carte(licitatii[data.battleID]['cerere'], cardValue, cardColor, tromf);
     		licitatii[data.battleID]['cerere'] = undefined;
     	}else{
-    		licitatii[data.battleID]['cerere'] = {
+    		
+    		var cerere = {
     			'cardValue': cardValue,
     			'cardColor': cardColor
     		}
-    		console.log('a')
+    		licitatii[data.battleID]['cerere'] = cerere;
+    		
     		var userIndex = onlineBattles[data.battleID].indexOf(data.user);
+    		
     		if(userIndex){
-			clients[users.indexOf(onlineBattles[data.battleID][0])].emit('cerere', {'cardValue': cardValue, cardColor: 'cardColor'});
+			clients[users.indexOf(onlineBattles[data.battleID][0])].emit('cerere', {'cerere': cerere});
 		}else{
-			clients[users.indexOf(onlineBattles[data.battleID][1])].emit('cerere', {'cardValue': cardValue, cardColor: 'cardColor'});
+			clients[users.indexOf(onlineBattles[data.battleID][1])].emit('cerere', {'cerere': cerere});
 		}
     	}
     })
