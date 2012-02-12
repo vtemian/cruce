@@ -6,6 +6,7 @@ lib-cov
 *.dat
 *.out
 *.pid
+*.*~
 benchmarks/*.png
 node_modules
 .idea
